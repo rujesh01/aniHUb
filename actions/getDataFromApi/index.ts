@@ -2,7 +2,6 @@
 
 const url = process.env.BASE_URL;
 
-console.log(url);
 
 const GetAnime = async () => {
   try {
