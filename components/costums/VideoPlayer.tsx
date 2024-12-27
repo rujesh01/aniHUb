@@ -26,12 +26,6 @@ const VideoPlayer: React.FC<VideoPageProps> = ({ videoData }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const playerRef = useRef<typeof videojs.players | null>(null);
 
-  const data = videoData.tracks.map((items) => {
-    return items.label;
-  });
-
-  console.log(data);
-
   useEffect(() => {
     if (playerRef.current || !videoRef.current) return;
 
@@ -46,13 +40,6 @@ const VideoPlayer: React.FC<VideoPageProps> = ({ videoData }) => {
       plugins: {
         hlsQualitySelector: {},
       },
-      // tracks: videoData.tracks.map((track) => ({
-      //   kind: track.kind,
-      //   src: track.file,
-      //   label: track.label,
-      //   srcLang: "en",
-      //   // default: track.default,
-      // })),
     });
 
     // Add sources to player
@@ -65,18 +52,16 @@ const VideoPlayer: React.FC<VideoPageProps> = ({ videoData }) => {
 
     // Add remote text tracks
     videoData.tracks.forEach((track) => {
-      player.addRemoteTextTrack(
-        {
-          kind: track.kind,
-          src: track.file,
-          label: track.label,
-          default: track.default || false,
-        },
-      );
+      player.addRemoteTextTrack({
+        kind: track.kind,
+        src: track.file,
+        label: track.label,
+        default: track.default || false,
+      });
     });
 
     player.ready(() => {
-      console.log("Player is ready!");
+      return null;
     });
 
     playerRef.current = player;
