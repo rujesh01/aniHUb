@@ -59,7 +59,7 @@ const VideoPlayer: React.FC<VideoPageProps> = ({ videoData }) => {
     player.src(
       videoData.sources.map((source) => ({
         src: source.url,
-        type: source.type,
+        type: "application/x-mpegURL",
       }))
     );
 
