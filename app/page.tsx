@@ -1,10 +1,23 @@
-import GetAnime from "@/actions/getDataFromApi";
-import Image from "next/image";
+import AniHubLogo from "@/components/Logo";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function Home() {
-  const data = await GetAnime();
+  return (
+    <div>
+      <section>
+        <h1>This is root page</h1>
+        <section>
+          <AniHubLogo />
+        </section>
 
-  console.log(data);
-
-  return <div>h1 thi is home</div>;
+        <Link href={"/home"}>
+          <Button className="flex">Go to home</Button>
+        </Link>
+        <Link href={"/watch"}>
+          <Button className="flex">Go to watch</Button>
+        </Link>
+      </section>
+    </div>
+  );
 }
