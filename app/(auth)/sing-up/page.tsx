@@ -4,7 +4,8 @@
 const SignUpPage = () => {
     return ( 
         <h1>
-            sign up page
+THis is improtant
+
         </h1>
      );
 }
