@@ -1,7 +1,9 @@
 
 const HomeCarausel = () => {
   return (
-    <div>HomeCarausel</div>
+    <div className="bg-red-400">
+        Carausel
+    </div>
   )
 }
 
