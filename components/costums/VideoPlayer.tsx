@@ -25,27 +25,27 @@ interface VideoData {
 const videoData: VideoData = {
   tracks: [
     {
-      file: "https://s.megastatics.com/subtitle/9b05cc08756a3ddc698aeee5e2721d45/9b05cc08756a3ddc698aeee5e2721d45.vtt",
+      file: "https://s.megastatics.com/subtitle/014eb8057bd37251c03cbdea00785760/014eb8057bd37251c03cbdea00785760.vtt",
       label: "English",
       kind: "captions",
       default: true,
     },
     {
-      file: "https://s.megastatics.com/thumbnails/550eec0da792b6ae20b3b906b9376602/thumbnails.vtt",
+      file: "https://s.megastatics.com/thumbnails/e15a44cf4459ba42f816762db281b3df/thumbnails.vtt",
       label: "Thumbnails",
-      kind: "thumbnails",
+      kind: "metadata",
     },
   ],
-  intro: { start: 0, end: 102 },
-  outro: { start: 1321, end: 1410 },
+  intro: { start: 0, end: 0 },
+  outro: { start: 1312, end: 1413 },
   sources: [
     {
-      url: "https://mmd.biananset.net/_v7/8fff1b4d38fbbd548c62f805027277d5e22c8ff713adc8f664f68fef8ac13bc3190b864b099c812066149256f438a546b56332b82c6596453f3942fe90b0968542ddbd0f8cd9bdfaceeaad9b4100b6f49ea1c2cf47d336f88fd9f7ad1120774aa0e0e1117932e53ea8a87dbc6c79e255d103efcb6e9a4215b131f65a7ef92f05/master.m3u8",
+      url: "https://vd2.biananset.net/_v7/6cf11084b41635f2ecc05709a2cc86b3069ced36b809e2e52fa32bd45af6791558306ad9ffca301af6a0a1f05a4b93a151917d106a7703a6291310283cb80c176c090d181fd0784c9e6aff3e35681a85727dd50da77a7d8ae703b0004385c6af7f4cf0c9808a799d8ccdf7e9bd95addc440e4a3e296fd4b7e5256230a0cdcfd3/master.m3u8",
       type: "application/x-mpegURL",
     },
   ],
-  anilistID: 21,
-  malID: 21,
+  anilistID: 137822,
+  malID: 49596,
 };
 
 const VideoPage: React.FC = () => {
@@ -55,7 +55,8 @@ const VideoPage: React.FC = () => {
   useEffect(() => {
     if (!playerRef.current && videoRef.current) {
       const videoElement = document.createElement("video-js");
-      videoElement.className = "video-js vjs-default-skin vjs-big-play-centered";
+      videoElement.className =
+        "video-js vjs-default-skin vjs-big-play-centered";
       videoRef.current.appendChild(videoElement);
 
       const player = (playerRef.current = videojs(videoElement, {
@@ -63,16 +64,16 @@ const VideoPage: React.FC = () => {
         responsive: true,
         fluid: true,
         controlBar: {
-          playToggle: true, 
-          muteToggle: true, 
-          volumeControl: true, 
-          fullscreenToggle: true, 
+          playToggle: true,
+          muteToggle: true,
+          volumeControl: true,
+          fullscreenToggle: true,
           captionsButton: true,
-          progressControl: true, 
-          hlsQualitySelector: true, 
+          progressControl: true,
+          hlsQualitySelector: true,
         },
         plugins: {
-          hlsQualitySelector: {}, 
+          hlsQualitySelector: {},
         },
         html5: {
           hls: {
@@ -89,8 +90,8 @@ const VideoPage: React.FC = () => {
       videoData.tracks.forEach((track) => {
         player.addRemoteTextTrack(
           {
-            kind: track.kind,
             src: track.file,
+            kind: track.kind,
             label: track.label,
             default: track.default || false,
           },
@@ -112,7 +113,13 @@ const VideoPage: React.FC = () => {
     };
   }, []);
 
-  return <div ref={videoRef} data-vjs-player style={{ width: "100%", height: "100%" }} />;
+  return (
+    <div
+      ref={videoRef}
+      data-vjs-player
+      style={{ width: "100%", height: "100%" }}
+    />
+  );
 };
 
 export default VideoPage;
