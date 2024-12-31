@@ -1,13 +1,14 @@
 import AniHubLogo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Root from "@/components/home";
+import Navbar from "@/components/HomePage/Navbar";
 
 export default async function Home() {
   return (
     <div>
       <section>
-        <h1>This is root page</h1>
+      <Navbar />
+        {/* <h1>This is root page</h1>
         <section>
           <AniHubLogo />
         </section>
@@ -17,8 +18,8 @@ export default async function Home() {
         </Link>
         <Link href={"/watch"}>
           <Button className="flex">Go to watch</Button>
-        </Link>
-        <Root />
+        </Link> */}
+       
       </section>
     </div>
   );
