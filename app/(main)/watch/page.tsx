@@ -8,10 +8,14 @@ const WatchPage = async () => {
 
   return (
     <>
-      <h1>this is watch page</h1>
-      <div className="border-white border w-screen h-[500px]">
-        <VideoPlayer videoData={data} />
-      </div>
+      {success && (
+        <div>
+          <h1>this is watch page</h1>
+          <div className="border-white border w-screen h-[500px]">
+            <VideoPlayer videoData={data} />
+          </div>
+        </div>
+      )}
     </>
   );
 };

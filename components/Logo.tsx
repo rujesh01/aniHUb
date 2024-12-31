@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react'
 
-const AniHubLogo: React.FC = () => {
+const Logo: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -49,5 +49,5 @@ const AniHubLogo: React.FC = () => {
   )
 }
 
-export default AniHubLogo
+export default Logo
 

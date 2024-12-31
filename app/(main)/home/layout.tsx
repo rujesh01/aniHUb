@@ -1,3 +1,4 @@
+import Navbar from "@/components/navbar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,7 +12,11 @@ type Props = {
 const HomeLayout = ({ children }: Props) => {
   return (
     <>
-      <section>{children}</section>
+      <section>
+        <Navbar />
+
+        {children}
+      </section>
     </>
   );
 };

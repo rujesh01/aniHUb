@@ -87,9 +87,6 @@ body {
   }
 }
 
-
-
-
 @keyframes dash {
   0% {
     stroke-dashoffset: 565.48;
@@ -101,7 +98,6 @@ body {
     stroke-dashoffset: -565.48;
   }
 }
-
 
 video-container {
   width: 100%;

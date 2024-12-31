@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import "videojs-hls-quality-selector";
@@ -24,6 +24,8 @@ interface VideoPageProps {
 const VideoPlayer = ({ videoData }: VideoPageProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const playerRef = useRef<typeof videojs.players | null>(null);
+  const [reload, setReload] = useState(false); // State to trigger reload
+
 
   useEffect(() => {
     if (playerRef.current || !videoRef.current) return;
@@ -120,6 +122,7 @@ const VideoPlayer = ({ videoData }: VideoPageProps) => {
 
     playerRef.current = player;
 
+    
     return () => {
       if (playerRef.current) {
         playerRef.current.dispose();
@@ -139,4 +142,3 @@ const VideoPlayer = ({ videoData }: VideoPageProps) => {
 };
 
 export default VideoPlayer;
-
