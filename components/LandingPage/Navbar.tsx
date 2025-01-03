@@ -4,11 +4,11 @@ import { useState } from "react";
 
 
 const links = [
-    { name: 'Home', href: '/home' },
-    { name: 'Movies', href: '/movie' },
-    { name: 'TV Series', href: '/tv', },
-    { name: 'Most Popular', href: '/most-popular', },
-    { name: 'Top Airing', href: '/top-airing' },
+    { id: 0, name: 'Home', href: '/home' },
+    { id: 1, name: 'Movies', href: '/movie' },
+    { id: 2, name: 'TV Series', href: '/tv', },
+    { id: 3, name: 'Most Popular', href: '/most-popular', },
+    { id: 4, name: 'Top Airing', href: '/top-airing' },
 ];
 
 const Navbar = () => {
@@ -52,7 +52,7 @@ const Navbar = () => {
                 <div className="bg-gray-800 md:hidden">
                     {links.map((link) => {
                         return (
-                            <ul className="flex flex-col items-center space-y-6 pt-8 pb-4">
+                            <ul key={link.id} className="flex flex-col items-center space-y-6 pt-8 pb-4">
                                 <Link key={link.name} href={link.href} className="text-white font-bold">{link.name}</Link>
 
                             </ul>
@@ -68,7 +68,7 @@ const Navbar = () => {
                 {links.map((link) => {
                     return (
 
-                        <ul className="flex space-x-9">
+                        <ul className="flex space-x-9" key={link.id}>
                             <li><Link key={link.name} href={link.href} className="text-white font-normal text-l cursor-pointer hover:text-gray-400">
                                 {link.name}
                             </Link></li>
