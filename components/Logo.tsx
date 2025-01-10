@@ -39,7 +39,7 @@ const Logo: React.FC = () => {
   }, [])
 
   return (
-    <div className="flex items-center justify-center p-4 bg-gray-900 rounded-lg shadow-lg">
+    <div className="flex items-center justify-center p-4 rounded-lg shadow-lg">
       <canvas ref={canvasRef} width="50" height="50" className="mr-2" />
       <div className="text-4xl font-bold">
         <span className="text-white">Ani</span>

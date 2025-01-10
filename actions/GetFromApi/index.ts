@@ -37,3 +37,22 @@ export const getAnimeHomePage = async () => {
     throw error;
   }
 };
+
+export const getSearchResult  = async (query: string, page: number) => {
+  try {
+    const res = await fetch(`${url}/api/v2/hianime/search?q=${query}&page=${page}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch search anime data.");
+    }
+
+    return await res.json();
+  } catch (error) {
+    
+  }
+}

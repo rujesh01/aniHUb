@@ -7,10 +7,12 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import Image from "next/image";
+import { CircleArrowRight, Search } from "lucide-react";
+import Logo from "../Logo";
 
 const Header = () => {
   const [query, setQuery] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   const topSearches = [
     { name: "Solo Leveling Season 2: Aris", param: "solo-leveling" },
@@ -21,46 +23,51 @@ const Header = () => {
     { name: "Bleach: Thousand-Year Blood War", param: "bleach-thousand-year" },
   ];
 
-  const handleSearch = () => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent the form from reloading the page
+    
     if (query.trim()) {
-      router.push(`/search?query=${encodeURIComponent(query)}`);
+      // Redirect to the search results page with query as keyword
+      router.push(`/search?keyword=${query}`);
     }
   };
+
+
 
 
   return (
 
     <div className="bg-gray-900 flex justify-center items-center">
-      <div className="relative rounded-3xl w-full max-w-[1350px] mx-4 bg-[#221c3d]">
+      <div className="relative md:rounded-3xl w-full max-w-[1350px] md:mx-4 bg-[#221c3d]">
         <Image
           src="https://hianime.to/images/anw-min.webp?v=0.1"
           alt="anihub"
           height={1000}
           width={800}
-          className="absolute h-full rounded-r-2xl top-0 object-cover right-0 opacity-30"
+          className="absolute h-full md:object-fill lg:rounded-r-2xl top-0 object-cover right-0 opacity-30"
         />
-        <section className="relative py-16 pl-16  rounded-2xl z-10">
+        <section className="relative pb-7 md:py-16 md:pl-16 px-8 rounded-2xl z-10">
           <h1 className="font-bold text-white text-4xl">
-            h<span className="text-fuchsia-600">!</span>anime
+           <div className="max-w-8 pl-16"><Logo/></div> 
           </h1>
-          <div className="flex gap-2 mt-6">
+          <form className="flex gap-2 md:mt-6 mt-3" onSubmit={handleSearch}>
             <Input
               placeholder="Search Anime ..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-80 p-6 rounded-xl bg-white"
+              className="w-96 p-6 rounded-xl bg-white md:text-base"
             />
-            <Button variant="outline" onClick={handleSearch} className="h-15 bg-red-300 hover:bg-red-200 rounded-xl">
-              🔍
+            <Button variant="outline" className="h-15 bg-red-300 hover:bg-red-200 rounded-xl">
+              <Search size={28}/>
             </Button>
-          </div>
+          </form>
           <div className="mt-7  w-96">
             <div className="flex flex-wrap gap-x-1">
             <span className="text-white pr-2">Top search:</span>
               {topSearches.map((item, index) => (
                 <React.Fragment key={index}>
                   <Link
-                    href={`/search?query=${item.param}`}
+                    href={`/search?keyword=${item.param}`}
                     className="text-slate-300 hover:text-white"
                   >
                     {item.name}
@@ -71,9 +78,9 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="mt-10">
-            <Link href={`/home`}>
-              <Button className="bg-red-300 text-black px-9 py-7 text-xl hover:bg-red-200">Watch anime ➡</Button>
+          <div className="md:mt-10 mt-5">
+            <Link href={`/watch`}>
+              <Button className="bg-red-300 rounded-xl md:rounded-lg text-black mx-auto md:px-11 md:py-7 py-7 text-xl hover:bg-red-200 w-full md:w-auto">Watch anime <CircleArrowRight size={28}  /></Button>
             </Link>
           </div>
         </section>
