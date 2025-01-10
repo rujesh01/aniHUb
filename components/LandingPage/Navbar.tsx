@@ -21,7 +21,7 @@ const Navbar = () => {
     return (
         <div className="bg-gray-900">
 
-            <div className="flex justify-between items-center px-4 pt-5 md:px-8">
+            <div className="flex justify-between items-center px-4 py-5 md:px-8">
                 <button
                     onClick={toggleMenu}
                     className="text-white focus:outline-none md:hidden"
@@ -64,15 +64,14 @@ const Navbar = () => {
 
 
 
-            <div className="hidden md:flex justify-center space-x-10 pt-10">
+            <div className="hidden md:flex justify-center space-x-10 pt-10 pb-8">
                 {links.map((link) => {
                     return (
 
-                        <ul className="flex space-x-9" key={link.id}>
-                            <li><Link key={link.name} href={link.href} className="text-white font-normal text-l cursor-pointer hover:text-gray-400">
+                        <ul key={link.id}>
+                            <Link key={link.name} href={link.href} className="text-white font-normal text-l cursor-pointer hover:text-gray-400">
                                 {link.name}
-                            </Link></li>
-
+                            </Link>
                         </ul>
 
                     );
