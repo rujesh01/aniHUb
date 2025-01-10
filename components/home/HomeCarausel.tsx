@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-"use client";
-=======
 'use client';
->>>>>>> carausel
 
 import { useEffect, useState } from "react";
 import { getAnimeHomePage } from "@/actions/GetFromApi";
@@ -67,15 +63,7 @@ const HomeCarousel = () => {
               <div className="hidden lg:block my-auto max-w-[40%] pl-4 z-20">
                 <p
                   className={`text-md font-medium mb-2 text-white ${
-<<<<<<< HEAD
-                    anime.rank === 1
-                      ? "text-yellow-400"
-                      : anime.rank === 2
-                      ? "text-gray-300"
-                      : "text-white"
-=======
                     anime.rank === 1 ? 'text-yellow-400' : anime.rank === 2 ? 'text-gray-300' : 'text-white'
->>>>>>> carausel
                   }`}
                 >
                   #{anime.rank} Spotlight
@@ -90,11 +78,7 @@ const HomeCarousel = () => {
                     <Chip
                       key={index}
                       size="sm"
-<<<<<<< HEAD
-                      className="text-white  rounded-md p-0"
-=======
                       className="text-white rounded-md p-0"
->>>>>>> carausel
                     >
                       {info}
                     </Chip>
@@ -138,15 +122,7 @@ const HomeCarousel = () => {
               <div className="absolute left-2 xs:left-5 bottom-4 xs:bottom-[60px] w-1/2 z-10 lg:hidden">
                 <p
                   className={`text-sm font-medium mb-2 text-white ${
-<<<<<<< HEAD
-                    anime.rank === 1
-                      ? "text-yellow-400"
-                      : anime.rank === 2
-                      ? "text-gray-300"
-                      : "text-white"
-=======
                     anime.rank === 1 ? 'text-yellow-400' : anime.rank === 2 ? 'text-gray-300' : 'text-white'
->>>>>>> carausel
                   }`}
                 >
                   #{anime.rank} Spotlight

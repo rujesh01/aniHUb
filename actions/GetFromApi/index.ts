@@ -25,17 +25,11 @@ export const getAnimeHomePage = async () => {
         "Content-Type": "application/json",
       },
     });
-<<<<<<< HEAD
-    if (!res.ok) {
-      throw new Error("Failed to fetch anime homepage data.");
-    }
-=======
 
     if (!res.ok) {
       throw new Error("Failed to fetch anime homepage data.");
     }
 
->>>>>>> carausel
     // Parse and return the JSON data
     return await res.json();
   } catch (error) {

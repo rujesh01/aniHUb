@@ -1,9 +1,9 @@
+import HomeCarousel from "@/components/home/HomeCarausel";
 
 const HomePage = () => {
   return (
     <div>
-     
-      <h1> home page</h1>
+      <HomeCarousel />
     </div>
   );
 };
