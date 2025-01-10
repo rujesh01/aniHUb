@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ITrendingAnime } from "@/types";
+import Image from "next/image";
 
 interface TrendingAnimeCarouselProps {
   animeData: ITrendingAnime[];
@@ -43,15 +44,18 @@ export function TrendingAnimeCarousel({
                 className="flex-shrink-0 w-48 bg-gray-900 border-0 group cursor-pointer"
               >
                 <CardContent className="p-0 relative overflow-hidden">
-                  <img
+                  <Image
                     src={anime.poster}
                     alt={anime.name || "Anime"}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
                     className="w-full h-72 object-cover rounded-t-lg transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-transparent p-4">
                     <div className="flex items-center gap-2">
                       <span className="text-purple-400 font-bold">
-                        {String(index + 1).padStart(2, "0")}
+                        {String(currentIndex + index + 1).padStart(2, "0")}
                       </span>
                       <h3 className="text-white font-medium text-sm truncate">
                         {anime.name}
