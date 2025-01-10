@@ -10,7 +10,6 @@ export default async function Home() {
         <section>
           <AniHubLogo />
         </section>
-
         <Link href={"/home"}>
           <Button className="flex">Go to home</Button>
         </Link>
