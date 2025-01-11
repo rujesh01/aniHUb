@@ -1,11 +1,12 @@
-import AniHubLogo from "@/components/Logo";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import Navbar from "@/components/LandingPage/Navbar";
+import Header from "@/components/LandingPage/SearchAnime";
+import AnimeDescription from "@/components/LandingPage/Description";
 
 export default async function Home() {
   return (
     <div>
       <section>
+<<<<<<< HEAD
         <h1>This is root page</h1>
         <section>
           <AniHubLogo />
@@ -16,6 +17,11 @@ export default async function Home() {
         <Link href={"/watch"}>
           <Button className="flex">Go to watch</Button>
         </Link>
+=======
+        <Navbar />
+        <Header />
+        <AnimeDescription />
+>>>>>>> arjun
       </section>
     </div>
   );
