@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
 import React from "react";
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { CircleArrowRight, Search } from "lucide-react";
@@ -26,18 +26,14 @@ const Header = () => {
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
    
     e.preventDefault(); // Prevent the form from reloading the page
-    
+
     if (query.trim()) {
       // Redirect to the search results page with query as keyword
       router.push(`/search?keyword=${query}&page=${page}`);
     }
   };
 
-
-
-
   return (
-
     <div className="bg-gray-900 flex justify-center items-center">
       <div className="relative md:rounded-3xl w-full max-w-[1350px] md:mx-4 bg-[#221c3d]">
         <Image
@@ -49,7 +45,9 @@ const Header = () => {
         />
         <section className="relative pb-7 md:py-16 md:pl-16 px-8 rounded-2xl z-10">
           <h1 className="font-bold text-white text-4xl">
-           <div className="max-w-8 pl-16"><Logo/></div> 
+            <div className="max-w-8 pl-16">
+              <Logo />
+            </div>
           </h1>
           <form className="flex gap-2 md:mt-6 mt-3" onSubmit={handleSearch}>
             <Input
@@ -58,13 +56,16 @@ const Header = () => {
               onChange={(e) => setQuery(e.target.value)}
               className="w-96 p-6 rounded-xl bg-white md:text-base"
             />
-            <Button variant="outline" className="h-15 bg-red-300 hover:bg-red-200 rounded-xl">
-              <Search size={28}/>
+            <Button
+              variant="outline"
+              className="h-15 bg-red-300 hover:bg-red-200 rounded-xl"
+            >
+              <Search size={28} />
             </Button>
           </form>
           <div className="mt-7  w-96">
             <div className="flex flex-wrap gap-x-1">
-            <span className="text-white pr-2">Top search:</span>
+              <span className="text-white pr-2">Top search:</span>
               {topSearches.map((item, index) => (
                 <React.Fragment key={index}>
                   <Link
@@ -73,22 +74,25 @@ const Header = () => {
                   >
                     {item.name}
                   </Link>
-                  {index < topSearches.length - 1 && <span className="text-slate-300">,</span>}
+                  {index < topSearches.length - 1 && (
+                    <span className="text-slate-300">,</span>
+                  )}
                 </React.Fragment>
               ))}
             </div>
           </div>
 
           <div className="md:mt-10 mt-5">
-            <Link href={`/watch`}>
-              <Button className="bg-red-300 rounded-xl md:rounded-lg text-black mx-auto md:px-11 md:py-7 py-7 text-xl hover:bg-red-200 w-full md:w-auto">Watch anime <CircleArrowRight size={28}  /></Button>
+            <Link href={`/home`}>
+              <Button className="bg-red-300 rounded-xl md:rounded-lg text-black mx-auto md:px-11 md:py-7 py-7 text-xl hover:bg-red-200 w-full md:w-auto">
+                Watch anime <CircleArrowRight size={28} />
+              </Button>
             </Link>
           </div>
         </section>
       </div>
     </div>
-
   );
-}
+};
 
 export default Header;
