@@ -4,10 +4,12 @@ import AnimeDescription from "@/components/LandingPage/Description";
 
 export default async function Home() {
   return (
-    <div className="h-screen bg-gray-900">
-      <Navbar />
-      <Header />
-      <AnimeDescription />
+    <div>
+      <section>
+        <Navbar />
+        <Header />
+        <AnimeDescription />
+      </section>
     </div>
   );
 }
