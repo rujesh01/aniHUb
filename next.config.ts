@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         port: '', // Leave empty if there's no specific port
         pathname: '/images/**', // Use a wildcard to allow all images in the `/images/` folder
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.noitatnemucod.net', // The domain of your image
+        port: '', // Leave empty if there's no specific port
+        pathname: '/thumbnail/**', // Use a wildcard to allow all images in the `/images/` folder
+      },
     ],
   },
 };

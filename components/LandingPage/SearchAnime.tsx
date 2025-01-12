@@ -22,13 +22,14 @@ const Header = () => {
     { name: "One Piece", param: "one-piece" },
     { name: "Bleach: Thousand-Year Blood War", param: "bleach-thousand-year" },
   ];
-
+  const page=1;
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+   
     e.preventDefault(); // Prevent the form from reloading the page
     
     if (query.trim()) {
       // Redirect to the search results page with query as keyword
-      router.push(`/search?keyword=${query}`);
+      router.push(`/search?keyword=${query}&page=${page}`);
     }
   };
 
@@ -67,7 +68,7 @@ const Header = () => {
               {topSearches.map((item, index) => (
                 <React.Fragment key={index}>
                   <Link
-                    href={`/search?keyword=${item.param}`}
+                    href={`/search?keyword=${item.param}&page=${page}`}
                     className="text-slate-300 hover:text-white"
                   >
                     {item.name}
