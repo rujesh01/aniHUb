@@ -104,3 +104,17 @@ video-container {
   height: 100%;
   position: absolute;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.root-layout {
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1)); /* Dark gray or the color you want */
+} 
+.image-overlay{
+  /* position: absolute; */
+  clip:rect(0px,498px,374px,100px);
+  clip-path: inset(0px 0px 0px 100px);
+}
