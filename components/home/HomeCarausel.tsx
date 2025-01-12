@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from "react";
 import { getAnimeHomePage } from "@/actions/GetFromApi";
 import { Button } from "@/components/ui/button";
-import { Chip } from "@nextui-org/react";
+import { Chip, Skeleton } from "@nextui-org/react";
 import Link from "next/link";
 import { Play, ArrowRight } from "lucide-react";
 import {
@@ -13,49 +12,51 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useQuery } from "@tanstack/react-query";
 
-const HomeCarouselLoading = () => (
-  <div className="w-full h-[400px] flex items-center justify-center text-white">
-    Loading...
-  </div>
-);
+interface spotlightAnimes {
+  rank: number;
+  id: string;
+  name: string;
+  description: string;
+  poster: string;
+  jname: string;
+  episodes: {
+    sub: string;
+    dub: string;
+  };
+  type: string;
+  otherInfo: [];
+}
 
 const HomeCarousel = () => {
-  const [animeData, setAnimeData] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["animeData"],
+    queryFn: () => getAnimeHomePage(),
+  });
 
-  useEffect(() => {
-    const fetchAnimeData = async () => {
-      try {
-        const response = await getAnimeHomePage();
-        if (response.success) {
-          setAnimeData(response.data.spotlightAnimes);
-        } else {
-          throw new Error("Failed to load spotlight animes.");
-        }
-      } catch (err) {
-        setError("Failed to load anime data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAnimeData();
-  }, []);
-
-  if (loading) {
-    return <HomeCarouselLoading />;
+  if (isLoading) {
+    return (
+      <div className="flex flex-col space-y-3">
+        <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[250px]" />
+          <Skeleton className="h-4 w-[200px]" />
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="text-red-500 text-center">{error}</div>;
+    return <h1>something went wrong</h1>;
   }
+
+  const SpotlightAnimesData = data.data.spotlightAnimes;
 
   return (
     <Carousel>
       <CarouselContent>
-        {animeData.map((anime, index) => (
+        {SpotlightAnimesData.map((anime: spotlightAnimes, index: number) => (
           <CarouselItem key={anime.id || index}>
             <div className="relative flex gap-4 justify-between w-full min-h-[250px] xs:max-h-[500px] lg:max-h-[500px] bg-gray-900">
               <div className="absolute w-full h-full z-10 hidden lg:block bg-gradient-to-r from-gray-900 to-transparent"></div>
@@ -63,7 +64,11 @@ const HomeCarousel = () => {
               <div className="hidden lg:block my-auto max-w-[40%] pl-4 z-20">
                 <p
                   className={`text-md font-medium mb-2 text-white ${
-                    anime.rank === 1 ? 'text-yellow-400' : anime.rank === 2 ? 'text-gray-300' : 'text-white'
+                    anime.rank === 1
+                      ? "text-yellow-400"
+                      : anime.rank === 2
+                      ? "text-gray-300"
+                      : "text-white"
                   }`}
                 >
                   #{anime.rank} Spotlight
@@ -116,13 +121,16 @@ const HomeCarousel = () => {
                 className="object-cover flex-1 w-full h-[500px] lg:min-w-[60%] rounded-none lg:rounded-l-lg"
               />
 
-              {/* Overlay for Small Screens */}
               <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-transparent w-full h-full z-10 lg:hidden"></div>
 
               <div className="absolute left-2 xs:left-5 bottom-4 xs:bottom-[60px] w-1/2 z-10 lg:hidden">
                 <p
                   className={`text-sm font-medium mb-2 text-white ${
-                    anime.rank === 1 ? 'text-yellow-400' : anime.rank === 2 ? 'text-gray-300' : 'text-white'
+                    anime.rank === 1
+                      ? "text-yellow-400"
+                      : anime.rank === 2
+                      ? "text-gray-300"
+                      : "text-white"
                   }`}
                 >
                   #{anime.rank} Spotlight
@@ -158,7 +166,7 @@ const HomeCarousel = () => {
                     </Button>
                   </Link>
 
-                  <Link href={`/more-info/${anime.id}`} className="block">
+                  <Link href={`/info/${anime.id}`} className="block">
                     <Button
                       variant="outline"
                       className="font-semibold rounded-lg xs:px-6 xs:text-lg flex items-center gap-2"

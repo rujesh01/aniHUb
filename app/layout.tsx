@@ -28,6 +28,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn("",font.variable)}>
         <ReactQueryProvider>
+
+
+
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -36,6 +39,10 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+
+
+
+          
         </ReactQueryProvider>
       </body>
     </html>
