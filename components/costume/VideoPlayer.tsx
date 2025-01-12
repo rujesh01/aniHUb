@@ -1,9 +1,10 @@
+
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import videojs from "video.js";
-import "video.js/dist/video-js.css";
-import "videojs-hls-quality-selector";
+import "video.js/dist/video-js.css"; // Import the default video.js styles
+import "videojs-hls-quality-selector"; // Ensure the HLS quality selector plugin is imported
 
 interface Track {
   file: string;
@@ -24,11 +25,10 @@ interface VideoPageProps {
 const VideoPlayer = ({ videoData }: VideoPageProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const playerRef = useRef<typeof videojs.players | null>(null);
-  const [reload, setReload] = useState(false); // State to trigger reload
+  const [playerReady, setPlayerReady] = useState<boolean>(false);
 
-
-  useEffect(() => {
-    if (playerRef.current || !videoRef.current) return;
+  const initializePlayer = () => {
+    if (playerRef.current || !videoRef.current) return; // Check if player is already initialized
 
     const player = videojs(videoRef.current, {
       controls: true,
@@ -38,9 +38,6 @@ const VideoPlayer = ({ videoData }: VideoPageProps) => {
       poster: "",
       responsive: true,
       fluid: true,
-      plugins: {
-        hlsQualitySelector: {},
-      },
       playbackRates: [0.5, 1, 1.5, 2],
       techOrder: ["html5"],
       html5: {
@@ -51,7 +48,7 @@ const VideoPlayer = ({ videoData }: VideoPageProps) => {
           withCredentials: false,
         },
         hls: {
-          capLevelToPlayerSize: true,
+          capLevelToPlayerSize: true, // Enable this for better HLS performance
         },
       },
       controlBar: {
@@ -64,49 +61,43 @@ const VideoPlayer = ({ videoData }: VideoPageProps) => {
         fullscreenToggle: true,
         playbackRateMenuButton: true,
         subtitlesButton: true,
-        qualitySelector: true,
+        qualitySelector: true, // Ensures the quality selector is available
         pictureInPictureToggle: true,
       },
-      hlsQualitySelector: {},
-      onReady: function () {
-        console.log("Player is ready!");
+      plugins: {
+        hlsQualitySelector: {}, // Add the plugin here
       },
-      onPlay: function () {
+      onReady: () => {
+        console.log("Player is ready!");
+        setPlayerReady(true);
+      },
+      onPlay: () => {
         console.log("Video is playing");
       },
-      onPause: function () {
+      onPause: () => {
         console.log("Video is paused");
       },
       errorDisplay: {
         message: "There was an error playing the video.",
         showError: true,
       },
-      customClassNames: {
-        "vjs-big-play-button": "custom-big-play-button",
-        "vjs-control-bar": "custom-control-bar",
-      },
-      ads: {
-        debug: true,
-        skipButton: {
-          enabled: true,
-          skipTime: 5,
-        },
-      },
       accessibility: {
         captions: true,
       },
-      videoJsCustomPlugin: {},
+      keyboard: true, // Enables keyboard shortcuts for controlling the video
     });
 
+    // Ensure that you specify the correct MIME type for HLS
     player.src(
       videoData.sources.map((source) => ({
         src: source.url,
-        type: "application/x-mpegURL",
+        type: "application/x-mpegURL", // HLS MIME type
       }))
     );
 
+    // Add subtitle tracks from the API response
     videoData.tracks
-      .filter((track) => track.kind !== "thumbnails")
+      .filter((track) => track.kind !== "thumbnails") // Exclude thumbnail tracks
       .forEach((track) => {
         player.addRemoteTextTrack({
           kind: track.kind,
@@ -116,29 +107,22 @@ const VideoPlayer = ({ videoData }: VideoPageProps) => {
         });
       });
 
-    player.ready(() => {
-      console.log("Player is ready!");
-    });
-
     playerRef.current = player;
+  };
 
-    
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.dispose();
-        playerRef.current = null;
-      }
-    };
-  }, [videoData]);
+  useEffect(() => {
+    if (!playerReady) {
+      initializePlayer();
+    }
+  }, [videoData, playerReady]);
 
   return (
-    <div className="video-container">
-      <video
-        ref={videoRef}
-        className="video-js vjs-default-skin vjs-big-play-centered"
-      />
+      <div className="video-container">
+        <video ref={videoRef} className="video-js " />
     </div>
   );
 };
 
 export default VideoPlayer;
+
+
