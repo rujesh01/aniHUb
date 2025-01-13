@@ -7,7 +7,7 @@ const InfoPage = async ({ params }: Props) => {
 
   return (
     <div>
-      <h1>info page   {animeId}</h1>
+      <h1>info page {animeId}</h1>
     </div>
   );
 };

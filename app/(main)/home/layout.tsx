@@ -14,7 +14,6 @@ const HomeLayout = ({ children }: Props) => {
     <>
       <section>
         <Navbar />
-
         {children}
       </section>
     </>
