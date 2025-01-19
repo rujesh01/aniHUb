@@ -1,6 +1,7 @@
 import { getStreamLink } from "@/actions/GetFromApi";
 import VideoPlayer from "@/components/costume/VideoPlayer";
 
+
 const WatchPage = async () => {
   const Data = await getStreamLink();
 
