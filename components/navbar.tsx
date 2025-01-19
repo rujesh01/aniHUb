@@ -42,7 +42,7 @@ const NavLinks = [
 const Navbar = () => {
   return (
     <nav className="h-20 bg-primary-foreground flex flex-row items-center">
-      <div>
+      <div className="bg-gray-900">
         <Logo />
       </div>
       <div className="block sm:hidden ">

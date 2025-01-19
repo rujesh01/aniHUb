@@ -1,23 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { z } from "zod";
+import { signInSchema, SignInFormData } from "@/app/(auth)/validation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 
-type FormData = {
-  username: string;
-  email: string;
-  password: string;
-};
-
-export default function Signup() {
-  const [formData, setFormData] = useState<FormData>({
-    username: "",
+export default function Signin() {
+  const [formData, setFormData] = useState<SignInFormData>({
     email: "",
     password: "",
   });
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,87 +23,70 @@ export default function Signup() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
+    try {
+      // Validate form data using the schema
+      signInSchema.parse(formData);
+      console.log("Form submitted", formData);
+      setErrors({});
+    } catch (err) {
+      // Catch and handle Zod validation errors
+      if (err instanceof z.ZodError) {
+        const formattedErrors: { [key: string]: string } = {};
+        err.errors.forEach((issue) => {
+          if (issue.path[0]) {
+            formattedErrors[issue.path[0] as string] = issue.message;
+          }
+        });
+        setErrors(formattedErrors);
+      }
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
-      {/* Form Card */}
-      <Card className="w-full max-w-lg shadow-2xl bg-gray-900 bg-opacity-95 relative z-10 p-6 rounded-xl">
-        <CardHeader className="text-center">
-          <CardTitle className="text-4xl font-extrabold text-pink-400">
-            Welcome to Anime World
-          </CardTitle>
-          <p className="text-sm text-gray-400 mt-2">
-            Create your account to explore your favorite anime!
-          </p>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Username Field */}
-            <div className="flex flex-col space-y-2">
-              <Label htmlFor="username" className="text-gray-300">
-                Username
-              </Label>
-              <Input
-                id="username"
-                name="username"
-                type="text"
-                placeholder="Your username"
-                value={formData.username}
-                onChange={handleChange}
-                className="bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-pink-500"
-              />
-            </div>
-
-            {/* Email Field */}
-            <div className="flex flex-col space-y-2">
-              <Label htmlFor="email" className="text-gray-300">
-                Email
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="you@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                className="bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-pink-500"
-              />
-            </div>
-
-            {/* Password Field */}
-            <div className="flex flex-col space-y-2">
-              <Label htmlFor="password" className="text-gray-300">
-                Password
-              </Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="••••••••"
-                value={formData.password}
-                onChange={handleChange}
-                className="bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-pink-500"
-              />
-            </div>
-
-            {/* Submit Button */}
-            <Button
-              type="submit"
-              className="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-lg transition duration-300"
-            >
-              Sign Up
-            </Button>
-          </form>
-        </CardContent>
-        <CardFooter className="text-center text-sm text-gray-400 mt-4">
-          Already have an account?{" "}
-          <a href="/login" className="text-pink-400 hover:underline">
-            Log In
-          </a>
-        </CardFooter>
-      </Card>
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-black to-gray-900 text-white flex items-center justify-center">
+      <div className="relative">
+        <div className="absolute inset-0 bg-[url('/path-to-your-anime-themed-background.jpg')] bg-cover bg-center opacity-20"></div>
+        <Card className="w-full max-w-lg shadow-2xl bg-opacity-90 bg-gray-900 relative z-10">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-extrabold text-pink-400">Welcome Back!</CardTitle>
+            <p className="text-sm text-gray-400">Sign in to continue exploring Anime World!</p>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="email" className="text-gray-300">Email</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="bg-gray-800 border border-gray-700 text-white"
+                />
+                {errors.email && <p className="text-pink-500 text-sm">{errors.email}</p>}
+              </div>
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="password" className="text-gray-300">Password</Label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="bg-gray-800 border border-gray-700 text-white"
+                />
+                {errors.password && <p className="text-pink-500 text-sm">{errors.password}</p>}
+              </div>
+              <Button type="submit" className="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-lg">Sign In</Button>
+            </form>
+          </CardContent>
+          <CardFooter className="text-center text-sm text-gray-400">
+            Don't have an account? <a href="/signup" className="text-pink-400 hover:underline">Sign Up</a>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 }
