@@ -1,9 +1,9 @@
-'use client';
+"use client";
 import { getAnimeHomePage } from "@/actions/GetFromApi";
 import React, { useEffect, useState } from "react";
-import { Separator } from "@/components/ui/separator"; 
-import { Captions, ChevronRight, Dot, Mic } from "lucide-react"; 
-import Link from "next/link"; 
+import { Separator } from "@/components/ui/separator";
+import { Captions, ChevronRight, Dot, Mic } from "lucide-react";
+import Link from "next/link";
 
 interface Anime {
   poster?: string;
@@ -27,7 +27,7 @@ const GridCard: React.FC = () => {
     topAiring: [],
     mostPopular: [],
     mostFavourite: [],
-    latestCompleted: []
+    latestCompleted: [],
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -41,7 +41,7 @@ const GridCard: React.FC = () => {
             topAiring: response.data.topAiringAnimes || [],
             mostPopular: response.data.mostPopularAnimes || [],
             mostFavourite: response.data.mostFavoriteAnimes || [],
-            latestCompleted: response.data.latestCompletedAnimes || []
+            latestCompleted: response.data.latestCompletedAnimes || [],
           });
         } else {
           throw new Error("Failed to load anime data.");
@@ -66,16 +66,30 @@ const GridCard: React.FC = () => {
 
   const categories = [
     { title: "Top Airing", items: animeData.topAiring, link: "/top-airing" },
-    { title: "Most Popular", items: animeData.mostPopular, link: "/most-popular" },
-    { title: "Most Favourite", items: animeData.mostFavourite, link: "/most-favourite" },
-    { title: "Latest Completed", items: animeData.latestCompleted, link: "/latest-completed" }
+    {
+      title: "Most Popular",
+      items: animeData.mostPopular,
+      link: "/most-popular",
+    },
+    {
+      title: "Most Favourite",
+      items: animeData.mostFavourite,
+      link: "/most-favourite",
+    },
+    {
+      title: "Latest Completed",
+      items: animeData.latestCompleted,
+      link: "/latest-completed",
+    },
   ];
 
   return (
-    <section className="m-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <section className="mx-4 mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {categories.map((category, index) => (
         <div key={index}>
-          <h2 className="text-[#FFBADE] text-lg font-semibold mb-4">{category.title}</h2>
+          <h2 className="text-[#FFBADE] text-lg font-semibold mb-4">
+            {category.title}
+          </h2>
           <ul className="space-y-1">
             {category.items.slice(0, 5).map((anime, idx) => (
               <React.Fragment key={idx}>
@@ -89,18 +103,23 @@ const GridCard: React.FC = () => {
                     <h2 className="text-sm font-bold">{anime.name}</h2>
                     <div className="flex items-center gap-1 mt-1 rounded-lg">
                       <span className="bg-green-200 flex items-center gap-1 rounded-md text-black p-1 font-semibold text-xs">
-                        <Captions className="h-4 w-4" />{anime.episodes.sub || "N/A"}
+                        <Captions className="h-4 w-4" />
+                        {anime.episodes.sub || "N/A"}
                       </span>
                       <span className="bg-blue-200 flex items-center gap-1 rounded-md text-black p-1 font-semibold text-xs">
-                        <Mic className="h-4 w-4" />{anime.episodes.dub || "N/A"}
+                        <Mic className="h-4 w-4" />
+                        {anime.episodes.dub || "N/A"}
                       </span>
                       <span className="text-sm flex items-center text-gray-400">
-                        <Dot className="text-gray-400" />{anime.type || "TV"}
+                        <Dot className="text-gray-400" />
+                        {anime.type || "TV"}
                       </span>
                     </div>
                   </div>
                 </li>
-                {idx < Math.min(4, category.items.length - 1) && <Separator className="my-2 bg-gray-700" />}
+                {idx < Math.min(4, category.items.length - 1) && (
+                  <Separator className="my-2 bg-gray-700" />
+                )}
               </React.Fragment>
             ))}
           </ul>
@@ -119,4 +138,3 @@ const GridCard: React.FC = () => {
 };
 
 export default GridCard;
-
